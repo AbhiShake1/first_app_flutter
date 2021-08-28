@@ -2,7 +2,15 @@ import 'package:first_app_flutter/utils/Routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String _name = "";
+  bool _animateLogin = true;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +26,8 @@ class LoginPage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.white,
-        body: SingleChildScrollView( // wrapping in scroll view also avoids pixel/bottom overflow
+        body: SingleChildScrollView(
+          // wrapping in scroll view also avoids pixel/bottom overflow
           child: Column(
             children: [
               Image.asset(
@@ -26,7 +35,7 @@ class LoginPage extends StatelessWidget {
                 fit: BoxFit.scaleDown,
               ),
               Text(
-                "Welcome!",
+                "Welcome $_name!",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.blueAccent,
@@ -56,6 +65,10 @@ class LoginPage extends StatelessWidget {
                           labelText: "Username",
                           hintText: "Enter Username",
                         ),
+                        onChanged: (v) {
+                          _name = v;
+                          setState(() {});
+                        },
                       ),
                     ),
                     Container(
@@ -74,23 +87,30 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, Routes.home), // open home intent on top
-                child: Text(
-                  "LOGIN",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
+              Container(
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() => _animateLogin = false);
+                    Navigator.pushNamed(context, Routes.home);
+                  },
+                  // open home intent on top
+                  child: !_animateLogin ? Icon(Icons.done) : Text(
+                    "LOGIN",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textScaleFactor: 2,
                   ),
-                  textScaleFactor: 2,
-                ),
-                style: TextButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(10), // make edges a bit rounded
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(_animateLogin ? 10 : 80), // make edges a bit rounded
+                    ),
+                    backgroundColor: Colors.lightBlueAccent,
+                    minimumSize: Size(_animateLogin ? 200 : 20, 50), //200 width, 50 height
+                    shadowColor: Colors.red,
                   ),
-                  backgroundColor: Colors.lightBlueAccent,
-                  minimumSize: Size(200, 50), //200 width, 50 height
                 ),
               ),
             ],
