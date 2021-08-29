@@ -11,6 +11,8 @@ class _LoginPageState extends State<LoginPage> {
   String _name = "";
   bool _animateLogin = true;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,92 +30,123 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           // wrapping in scroll view also avoids pixel/bottom overflow
-          child: Column(
-            children: [
-              Image.asset(
-                "assets/images/login.png",
-                fit: BoxFit.scaleDown,
-              ),
-              Text(
-                "Welcome $_name!",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent,
-                  decoration: TextDecoration.underline,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 100,
-                      color: Colors.purple,
-                    )
-                  ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Image.asset(
+                  "assets/images/login.png",
+                  fit: BoxFit.scaleDown,
                 ),
-                textScaleFactor: 3.0, // original size * 3
-              ),
-              SizedBox(
-                height: 30,
-              ), // empty box for spacing (didnt use padding on purpose)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 60,
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Username",
-                          hintText: "Enter Username",
-                        ),
-                        onChanged: (v) {
-                          _name = v;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                    Container(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          hintText: "Enter Password",
-                        ),
-                        obscureText:
-                            true, // dont show typed text (show dots like password fields)
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() => _animateLogin = false);
-                    Navigator.pushNamed(context, Routes.home);
-                  },
-                  // open home intent on top
-                  child: !_animateLogin ? Icon(Icons.done) : Text(
-                    "LOGIN",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    textScaleFactor: 2,
+                Text(
+                  "Welcome $_name!",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                    decoration: TextDecoration.underline,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 100,
+                        color: Colors.purple,
+                      )
+                    ],
                   ),
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(_animateLogin ? 10 : 80), // make edges a bit rounded
-                    ),
-                    backgroundColor: Colors.lightBlueAccent,
-                    minimumSize: Size(_animateLogin ? 200 : 20, 50), //200 width, 50 height
-                    shadowColor: Colors.red,
+                  textScaleFactor: 3.0, // original size * 3
+                ),
+                SizedBox(
+                  height: 30,
+                ), // empty box for spacing (didnt use padding on purpose)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 60,
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "Username",
+                            hintText: "Enter Username",
+                          ),
+                          onChanged: (v) {
+                            _name = v;
+                            setState(() {});
+                          },
+                          validator: (v) =>
+                              v!.isEmpty ? "Username can not be empty" : null,
+                        ),
+                      ),
+                      Container(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            hintText: "Enter Password",
+                          ),
+
+                          validator: (v) => v!.isEmpty
+                              ? "Username can not be empty"
+                              : v.length < 8
+                                  ? "Password must contain more than 8 letters"
+                                  : null,
+                          obscureText:
+                              true, // dont show typed text (show dots like password fields)
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 20,
+                ),
+                Material(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(_animateLogin ? 30 : 50),
+                  child: InkWell(
+                    onTap: () async {
+                      if(_formKey.currentState!.validate()){
+                        setState(() => _animateLogin = false);
+                        await Future.delayed(Duration(
+                          seconds: 1,
+                        ));
+                        await Navigator.pushNamed(context, Routes.home);
+                        // restore changed button props on back
+                        setState(() => _animateLogin = true);
+                      }
+                    },
+                    // could remove check if we cant go back to login page with same state
+                    customBorder:
+                        _animateLogin ? StadiumBorder() : CircleBorder(),
+                    highlightColor: Colors.transparent,
+                    // size indicator during ripple
+                    splashColor: Colors.lightGreenAccent,
+                    // ripple effect color
+                    child: AnimatedContainer(
+                      duration: Duration(
+                        seconds: 1,
+                      ),
+                      width: _animateLogin ? 130 : 50,
+                      height: 50,
+                      alignment: Alignment.center,
+                      child: !_animateLogin
+                          ? Icon(
+                              Icons.done,
+                              color: Colors.white,
+                            )
+                          : Text(
+                              "LOGIN",
+                              textScaleFactor: 2,
+                              style: TextStyle(
+                                color: Colors.white,
+                                //fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
