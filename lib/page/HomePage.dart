@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widget/Drawer.dart';
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -8,20 +10,23 @@ class HomePage extends StatelessWidget {
       // configs to apply when dark mode
       // theme: named arg for light theme config
       darkTheme: ThemeData(
+        primarySwatch: Colors.red,
         brightness: Brightness.dark,
         appBarTheme: AppBarTheme(
-          color: Colors.deepOrangeAccent,
+          backgroundColor: Colors.red,
+        ),
+      ),
+      theme: ThemeData(
+        primarySwatch: Colors.yellow,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.yellowAccent,
         ),
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("This is app bar"),
+          title: Text("Learning flutter"),
         ),
-        drawer: Drawer(
-          child: Center(
-            child: Text("Drawer"),
-          ),
-        ),
+        drawer: HomeDrawer(),
         body: Center(
           child: Text("This is body"),
         ),

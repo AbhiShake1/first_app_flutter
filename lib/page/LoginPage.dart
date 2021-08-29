@@ -1,4 +1,4 @@
-import 'package:first_app_flutter/utils/Routes.dart';
+import 'package:first_app_flutter/util/Routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -8,8 +8,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String _name = "";
-  bool _animateLogin = true;
+  var _name = "", _animateLogin = true;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -19,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            "This is login page text",
+            "First Flutter App",
             style: TextStyle(
               fontSize: 30,
               fontStyle: FontStyle.italic,
@@ -70,8 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                             hintText: "Enter Username",
                           ),
                           onChanged: (v) {
-                            _name = v;
-                            setState(() {});
+                            setState(() => _name = v);
                           },
                           validator: (v) =>
                               v!.isEmpty ? "Username can not be empty" : null,
@@ -87,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (v) => v!.isEmpty
                               ? "Username can not be empty"
                               : v.length < 8
-                                  ? "Password must contain more than 8 letters"
+                                  ? "Password must contain at least 8 letters"
                                   : null,
                           obscureText:
                               true, // dont show typed text (show dots like password fields)
@@ -104,11 +102,13 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.circular(_animateLogin ? 30 : 50),
                   child: InkWell(
                     onTap: () async {
-                      if(_formKey.currentState!.validate()){
+                      if (_formKey.currentState!.validate()) {
                         setState(() => _animateLogin = false);
-                        await Future.delayed(Duration(
-                          seconds: 1,
-                        ));
+                        await Future.delayed(
+                          Duration(
+                            seconds: 1,
+                          ),
+                        );
                         await Navigator.pushNamed(context, Routes.home);
                         // restore changed button props on back
                         setState(() => _animateLogin = true);
@@ -117,10 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                     // could remove check if we cant go back to login page with same state
                     customBorder:
                         _animateLogin ? StadiumBorder() : CircleBorder(),
-                    highlightColor: Colors.transparent,
                     // size indicator during ripple
-                    splashColor: Colors.lightGreenAccent,
+                    highlightColor: Colors.transparent,
                     // ripple effect color
+                    splashColor: Colors.lightGreenAccent,
                     child: AnimatedContainer(
                       duration: Duration(
                         seconds: 1,
@@ -136,6 +136,8 @@ class _LoginPageState extends State<LoginPage> {
                           : Text(
                               "LOGIN",
                               textScaleFactor: 2,
+                              maxLines: 1,
+                              //prevent weird effect when returning back from home
                               style: TextStyle(
                                 color: Colors.white,
                                 //fontWeight: FontWeight.bold,
