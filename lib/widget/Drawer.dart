@@ -1,12 +1,11 @@
-import 'package:first_app_flutter/page/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatelessWidget {
-  final _imageUrl =
-      "https://scontent.fktm1-1.fna.fbcdn.net/v/t1.6435-9/46470574_1891233157656811_8439262960253140992_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=e3f864&_nc_ohc=EgOuepU96YgAX9liZda&_nc_ht=scontent.fktm1-1.fna&oh=6287706ee64d3acb9200886d2ceb3e77&oe=6151A751";
-
   @override
   Widget build(BuildContext context) {
+    final imageUrl =
+        "https://scontent.fktm1-1.fna.fbcdn.net/v/t1.6435-9/46470574_1891233157656811_8439262960253140992_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=e3f864&_nc_ohc=EgOuepU96YgAX9liZda&_nc_ht=scontent.fktm1-1.fna&oh=6287706ee64d3acb9200886d2ceb3e77&oe=6151A751";
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -20,7 +19,7 @@ class HomeDrawer extends StatelessWidget {
               accountEmail: Text("Account email text"),
               accountName: Text("Account name text"),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(_imageUrl),
+                backgroundImage: NetworkImage(imageUrl),
               ),
               margin: EdgeInsets.zero,
             ),
