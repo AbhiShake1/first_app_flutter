@@ -4,7 +4,6 @@ import 'package:first_app_flutter/model/CatalogModel.dart';
 import 'package:first_app_flutter/widget/ItemWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../widget/Drawer.dart';
 
 class HomePage extends StatelessWidget {
@@ -39,7 +38,7 @@ class HomePage extends StatelessWidget {
 }
 
 class _HomeBody extends StatefulWidget {
-  //final dummyList = List.generate(20, (index) => CatalogModel.items[0]);
+  //final dummyList = List.generate(20, (_) => CatalogModel.items![0]);
 
   @override
   State<_HomeBody> createState() => _HomeBodyState();
@@ -49,15 +48,52 @@ class _HomeBodyState extends State<_HomeBody> {
   @override
   Widget build(BuildContext context) {
     return (CatalogModel.items?.isNotEmpty ?? false)
-        ? ListView.builder(
-            //itemCount: dummyList.length,
-            itemCount: CatalogModel.items?.length,
-            itemBuilder: (c, i) => Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: ItemWidget(
-                  //item: dummyList[i],
-                  item: CatalogModel.items![i],
-                )),
+        ? GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 13,
+              crossAxisSpacing: 13,
+            ),
+            itemCount: CatalogModel.items!.length,
+            itemBuilder: (_, i) {
+              final item = CatalogModel.items![i];
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: GridTile(
+                  child: Image.network(item.imageUrl),
+                  header: Container(
+                    child: Text(
+                      item.name,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).appBarTheme.backgroundColor,
+                    ),
+                  ),
+                  footer: Container(
+                    child: Text(
+                      item.price.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .appBarTheme
+                          .backgroundColor
+                          ?.withGreen(90),
+                    ),
+                  ),
+                ),
+              );
+            },
           )
         : Center(
             child: CircularProgressIndicator(),
