@@ -85,9 +85,11 @@ class _LoginPageState extends State<LoginPage> {
                           seconds: 1,
                         ),
                       );
-                      await Navigator.pushNamed(context, Routes.home);
+                      // do not push to stack, replace with previous screen
+                      await context.navigator?.pushReplacementNamed(Routes.home);
+                      //await Navigator.pushNamed(context, Routes.home);
                       // restore changed button props on back
-                      setState(() => _animateLogin = true);
+                      //setState(() => _animateLogin = true);
                     }
                   },
                   // could remove check if we cant go back to login page with same state

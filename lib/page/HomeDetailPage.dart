@@ -1,4 +1,5 @@
 import 'package:first_app_flutter/model/CatalogModel.dart';
+import 'package:first_app_flutter/widget/GlobalAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -9,56 +10,46 @@ class HomeDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Scaffold(
-        backgroundColor: Vx.blueGray300,
-        appBar: AppBar(
-          backgroundColor: Vx.blueGray300,
-          elevation: 0,
-          toolbarHeight: 60,
-          leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Vx.orange500,
-              size: 35,
-            ).p20(),
+    return Scaffold(
+      backgroundColor: context.backgroundColor,
+      appBar: GlobalAppBar(context),
+      body: Column(
+        children: [
+          Hero(
+            tag: Key(catalog.id),
+            child: Image.network(
+              catalog.imageUrl,
+              height: 520,
+            ),
           ),
-        ),
-        body: Column(
-          children: [
-            Hero(
-              tag: Key(catalog.id),
-              child: Image.network(
-                catalog.imageUrl,
-                height: 520,
-              ),
-            ),
-            _HomeDetailBody(
-              catalog: catalog,
-            ),
-          ],
-        ),
-        bottomNavigationBar: ButtonBar(
-          alignment: MainAxisAlignment.spaceBetween,
-          children: [
-            "\$${catalog.price}".text.orange500.bold.xl3.make(),
-            ElevatedButton(
-              onPressed: () {},
-              child: "Add to cart".text.make(),
-              style: ElevatedButton.styleFrom(
-                primary: Vx.orange500,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
+          _HomeDetailBody(
+            catalog: catalog,
+          ),
+        ],
+      ),
+      bottomNavigationBar: ButtonBar(
+        alignment: MainAxisAlignment.spaceBetween,
+        children: [
+          "\$${catalog.price}"
+              .text
+              .color(context.accentColor)
+              .bold
+              .xl3
+              .make(),
+          ElevatedButton(
+            onPressed: () {},
+            child: "Add to cart".text.make(),
+            style: ElevatedButton.styleFrom(
+              primary: context.accentColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
                 ),
               ),
-            ).wh(100, 50),
-          ],
-        ).p32().backgroundColor(Colors.white),
-      ),
+            ),
+          ).wh(100, 50),
+        ],
+      ).p32().backgroundColor(context.cardColor),
     );
   }
 }
@@ -75,13 +66,28 @@ class _HomeDetailBody extends StatelessWidget {
       arcType: VxArcType.CONVEY,
       edge: VxEdge.TOP,
       child: Container(
-        color: Colors.white,
+        color: context.cardColor,
         width: context.screenWidth,
         child: Column(
           children: [
-            catalog.name.text.extraBlack.extraBold.scale(2.4).make().py12(),
-            catalog.desc.text.blueGray300.italic.scale(1.2).make().py8(),
-            catalog.descExtra.text.blueGray300.italic.make().px16().py24(),
+            catalog.name.text
+                .color(context.theme.focusColor)
+                .extraBold
+                .scale(2.4)
+                .make()
+                .py12(),
+            catalog.desc.text
+                .color(context.primaryColor)
+                .italic
+                .scale(1.2)
+                .make()
+                .py8(),
+            catalog.descExtra.text
+                .color(context.primaryColor)
+                .italic
+                .make()
+                .px16()
+                .py24(),
           ],
         ).p64(),
       ),

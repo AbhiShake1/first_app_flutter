@@ -7,17 +7,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
+import '../widget/GlobalCircularProgressIndicator.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(
-          context,
+        onPressed: () => context.navigator?.pushNamed(
           Routes.cart,
         ),
-        backgroundColor: Vx.orange500,
+        backgroundColor: context.accentColor,
         child: Icon(CupertinoIcons.shopping_cart),
       ),
       body: SafeArea(
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
             _CatalogHeader(),
             _HomeBody(),
           ],
-        ).p32().backgroundColor(Vx.blueGray300),
+        ).p32().backgroundColor(context.backgroundColor),
       ),
     );
   }
@@ -45,11 +45,18 @@ class _CatalogHeader extends StatelessWidget {
             .xl5
             .extraBold
             .underline
-            .orange500
+            .color(context.accentColor)
             .makeCentered()
             .py32(),
         VxBox().py64.make(),
-        "Trending Products".text.xl3.bold.orange400.italic.make().p(18),
+        "Trending Products"
+            .text
+            .xl3
+            .bold
+            .color(context.accentColor.withRed(-10))
+            .italic
+            .make()
+            .p(18),
       ],
     );
   }
@@ -67,8 +74,7 @@ class _CatalogList extends StatelessWidget {
           child: _CatalogItem(
             catalog: catalog,
           ),
-          onTap: () => Navigator.push(
-            context,
+          onTap: () => context.navigator?.push(
             MaterialPageRoute(
               builder: (c) => HomeDetailPage(catalog: catalog),
             ),
@@ -100,17 +106,27 @@ class _CatalogItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                catalog.name.text.bold.xl2.coolGray700.make(),
-                catalog.desc.text.textStyle(context.captionStyle!).xl.make(),
+                catalog.name.text.bold.xl2.color(context.primaryColor).make(),
+                catalog.desc.text
+                    .color(context.canvasColor)
+                    .textStyle(context.captionStyle!)
+                    .xl
+                    .make(),
                 ButtonBar(
                   alignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    "\$${catalog.price}".text.orange500.bold.xl.make(),
+                    "\$${catalog.price}"
+                        .text
+                        .color(context.accentColor)
+                        .bold
+                        .xl
+                        .make(),
                     ElevatedButton(
                       onPressed: () {},
-                      child: "Add to cart".text.make().animatedBox.rounded.make(),
+                      child:
+                          "Add to cart".text.make().animatedBox.rounded.make(),
                       style: ElevatedButton.styleFrom(
-                        primary: Vx.orange500,
+                        primary: context.accentColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(10),
@@ -125,7 +141,7 @@ class _CatalogItem extends StatelessWidget {
           ),
         ],
       ),
-    ).white.rounded.square(110).make().py(16);
+    ).color(context.cardColor).rounded.square(110).make().py(16);
   }
 }
 
@@ -138,8 +154,15 @@ class _CatalogImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       imageUrl,
-      errorBuilder: (c, e, s) => CircularProgressIndicator().centered(),
-    ).box.roundedSM.color(Vx.blueGray300).p8.make().p16().wh24(context);
+      errorBuilder: (c, e, s) => GlobalCircularProgressIndicator(),
+    )
+        .box
+        .roundedSM
+        .color(context.backgroundColor)
+        .p8
+        .make()
+        .p16()
+        .wh24(context);
   }
 }
 
@@ -156,7 +179,7 @@ class _HomeBodyState extends State<_HomeBody> {
     return (CatalogModel.items?.isNotEmpty ?? false)
         ? _CatalogList().expand()
         : Center(
-            child: CircularProgressIndicator().centered().expand(),
+            child: GlobalCircularProgressIndicator()
           );
   }
 
