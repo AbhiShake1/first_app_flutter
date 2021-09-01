@@ -1,4 +1,11 @@
 class CatalogModel {
+  //singleton
+  static final catModel = CatalogModel.instance();
+
+  CatalogModel.instance();
+
+  factory CatalogModel() => catModel;
+
   static List<Item>? items;
 
   Item? getById(String id) => items?.firstWhere(

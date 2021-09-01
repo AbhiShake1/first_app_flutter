@@ -1,4 +1,7 @@
+import 'package:first_app_flutter/model/CartModel.dart';
+import 'package:first_app_flutter/model/CatalogModel.dart';
 import 'package:first_app_flutter/widget/GlobalAppBar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -27,10 +30,11 @@ class CartPage extends StatelessWidget {
 class _CartTotal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final cart = CartModel();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        "\$9999".text.xl5.color(context.theme.accentColor).make().px32(),
+        "\$${cart.totalPrice}".text.xl5.color(context.theme.accentColor).make().px32(),
         90.widthBox,
         ElevatedButton(
           style: ButtonStyle(
@@ -63,10 +67,11 @@ class _CartList extends StatefulWidget {
 }
 
 class _CartListState extends State<_CartList> {
+  final cart = CartModel();
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10,
+      itemCount: cart.items.length,
       itemBuilder: (c, i) => ListTile(
         leading: Icon(
           Icons.done,
@@ -74,12 +79,12 @@ class _CartListState extends State<_CartList> {
         ),
         trailing: IconButton(
           icon: Icon(
-            Icons.remove,
+            CupertinoIcons.delete_solid,
             color: context.theme.focusColor,
           ),
           onPressed: () {},
         ),
-        title: "Item".text.color(context.theme.focusColor).make(),
+        title: cart.items[i]?.name.text.color(context.theme.focusColor).make(),
       ),
     );
   }

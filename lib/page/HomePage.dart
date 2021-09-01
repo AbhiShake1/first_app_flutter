@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:first_app_flutter/model/CartModel.dart';
 import 'package:first_app_flutter/model/CatalogModel.dart';
 import 'package:first_app_flutter/page/HomeDetailPage.dart';
 import 'package:first_app_flutter/util/Routes.dart';
@@ -121,19 +122,7 @@ class _CatalogItem extends StatelessWidget {
                         .bold
                         .xl
                         .make(),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child:
-                          "Add to cart".text.make().animatedBox.rounded.make(),
-                      style: ElevatedButton.styleFrom(
-                        primary: context.accentColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
+                    _AddToCart(catalog),
                   ],
                 ),
               ],
@@ -142,6 +131,46 @@ class _CatalogItem extends StatelessWidget {
         ],
       ),
     ).color(context.cardColor).rounded.square(110).make().py(16);
+  }
+}
+
+class _AddToCart extends StatefulWidget {
+  final Item catalog;
+
+  const _AddToCart(this.catalog);
+
+  @override
+  State<_AddToCart> createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<_AddToCart> {
+  bool isAdded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(
+          () {
+            isAdded = isAdded.toggle();
+            final cart = CartModel();
+            cart.catalog = CatalogModel();
+            cart.add(widget.catalog);
+          },
+        );
+      },
+      child: isAdded
+          ? Icon(Icons.done)
+          : "Add to cart".text.make().animatedBox.rounded.make(),
+      style: ElevatedButton.styleFrom(
+        primary: context.accentColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      ),
+    );
   }
 }
 
