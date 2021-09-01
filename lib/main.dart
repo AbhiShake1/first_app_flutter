@@ -1,3 +1,4 @@
+import 'package:first_app_flutter/page/CartPage.dart';
 import 'package:flutter/material.dart';
 
 import 'page/HomePage.dart';
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
         '/' : (c) => HomePage(), //by default or if no path found
         Routes.home : (c) => HomePage(),
         Routes.login : (c) => LoginPage(),
+        Routes.cart : (c) => CartPage(),
       },
     );
   }

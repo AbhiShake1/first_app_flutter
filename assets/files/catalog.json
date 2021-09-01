@@ -4,6 +4,7 @@
       "id": "1",
       "name": "iPhone 12 Pro",
       "desc": "Apple iPhone 12th generation",
+      "descExtra": "It is the first major redesign since the iPhone X, similar to that of iPad Pros since 2018 and the 4th-generation iPad Air. The iPhone 12 and 12 Mini have a new design featuring a flat chassis, a design first seen with the iPhone 4 and last seen with the first-generation iPhone SE. The notch size is similar to previous iPhone models, despite speculation about a reduction in width.",
       "price": 999,
       "color": "#33505a",
       "imageUrl": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-pro-blue-hero?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1604021661000"
@@ -12,6 +13,7 @@
       "id": "2",
       "name": "Pixel 5",
       "desc": "Google Pixel phone 5th generation",
+      "descExtra": "The Pixel 5 is an Android smartphone from the Google Pixel product line, serving as a successor to the Pixel 4. The phone was officially announced on September 30, 2020, alongside the Pixel 4a (5G), and was released in the United States on October 29, 2020. This is the first flagship smartphone in the Pixel lineup not to feature an XL version.",
       "price": 699,
       "color": "#00ac51",
       "imageUrl": "https://www.telstra.com.au/content/dam/tcom/lego/2020/plans-devices/mobiles/google-pixel-5/shared-google-pixel-5-black-05-900x1200.png"
@@ -20,6 +22,7 @@
       "id": "3",
       "name": "M1 Macbook Air",
       "desc": "Apple Macbook air with apple silicon",
+      "descExtra": "Apple’s thinnest (.63 inches) and lightest (2.8 pounds) laptop also features its newest M1 chip. The M1 chip is designed using the same architecture as the processors in its iPhones and iPads.",
       "price": 1099,
       "color": "#e0bfae",
       "imageUrl": "https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP825/macbookair.png"
@@ -28,6 +31,7 @@
       "id": "4",
       "name": "Playstation 5",
       "desc": "Sony Playstation 5th generation",
+      "descExtra": "The PlayStation 5 ( PS5) is a home video game console developed by Sony Interactive Entertainment. Announced in 2019 as the successor to the PlayStation 4, the PS5 was released on November 12, 2020, in Australia, Japan, New Zealand, North America, Singapore and South Korea, with worldwide release following a week later.",
       "price": 500,
       "color": "#544ee4",
       "imageUrl": "https://i1.wp.com/freepngimages.com/wp-content/uploads/2020/07/Playstation-5-games-console-transparent-background-png-image.png?fit=1000%2C1000"
@@ -36,6 +40,7 @@
       "id": "5",
       "name": "Airpods Pro",
       "desc": "Apple Aipods Pro 1st generation",
+      "descExtra": "AirPods Pro are sweat and water resistant for non-water sports and exercise. AirPods Pro were tested under controlled laboratory conditions, and have a rating of IPX4 under IEC standard 60529. Sweat and water resistance are not permanent conditions and resistance might decrease as a result of normal wear.",
       "price": 200,
       "color": "#e3e4e9",
       "imageUrl": "https://crdms.images.consumerreports.org/c_lfill,w_598/prod/products/cr/models/400116-wireless-portable-headphones-apple-airpods-pro-10009323.png"
@@ -44,6 +49,7 @@
       "id": "6",
       "name": "iPad Pro",
       "desc": "Apple iPad Pro 2020 edition",
+      "descExtra": "iPad Pro is a premium edition of the iPad tablet computers developed by Apple. It initially ran iOS, but was later switched to a derivation of the same equivalent that is optimized for the iPad, iPadOS. The first iPad Pro was introduced on September 9, 2015, running iOS 9.",
       "price": 799,
       "color": "#f73984",
       "imageUrl": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-12-select-wifi-silver-202003_FMT_WHH?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1583551131102"
@@ -52,6 +58,7 @@
       "id": "7",
       "name": "Galaxy S21 Ultra",
       "desc": "Samsung Galaxy S21 Ultra 2021 edition",
+      "descExtra": "Galaxy S21 Ultra offers one of the most advanced cameras in this series. It has a quad-camera setup with a primary camera of 108 MP, 12MP with ultra-wide face detection. In addition, two telephoto lenses, each of 10Megapixel with 3X and 10X optical zoom features.",
       "price": 1299,
       "color": "#1c1c1c",
       "imageUrl": "https://lh3.googleusercontent.com/qRQPjHrhRVIs-xnfNSyiPXOH2vH97ylMacgbTKebqJtRfNH3LlYo8pN-5igsLDWUH62tGl5zNpTsl5xd8SprzGmXoCEmWFOi2-2cQVGS-r3PaRXHt62DmJHq-jrYX0UQvWZ9BA=s800-c"
@@ -60,6 +67,7 @@
       "id": "8",
       "name": "Galaxy S21",
       "desc": "Samsung Galaxy S21 2021 edition",
+      "descExtra": "Galaxy S21 Ultra offers one of the most advanced cameras in this series. It has a quad-camera setup with a primary camera of 108 MP, 12MP with ultra-wide face detection. In addition, two telephoto lenses, each of 10Megapixel with 3X and 10X optical zoom features.",
       "price": 899,
       "color": "#7c95eb",
       "imageUrl": "https://lh3.googleusercontent.com/qRQPjHrhRVIs-xnfNSyiPXOH2vH97ylMacgbTKebqJtRfNH3LlYo8pN-5igsLDWUH62tGl5zNpTsl5xd8SprzGmXoCEmWFOi2-2cQVGS-r3PaRXHt62DmJHq-jrYX0UQvWZ9BA=s800-c"

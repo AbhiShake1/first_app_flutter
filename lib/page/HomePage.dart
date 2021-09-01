@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:first_app_flutter/model/CatalogModel.dart';
+import 'package:first_app_flutter/page/HomeDetailPage.dart';
+import 'package:first_app_flutter/util/Routes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -9,6 +12,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(
+          context,
+          Routes.cart,
+        ),
+        backgroundColor: Vx.orange500,
+        child: Icon(CupertinoIcons.shopping_cart),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,8 +63,16 @@ class _CatalogList extends StatelessWidget {
       itemCount: CatalogModel.items!.length,
       itemBuilder: (c, i) {
         final catalog = CatalogModel.items![i];
-        return _CatalogItem(
-          catalog: catalog,
+        return InkWell(
+          child: _CatalogItem(
+            catalog: catalog,
+          ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (c) => HomeDetailPage(catalog: catalog),
+            ),
+          ),
         );
       },
     );
@@ -70,8 +89,11 @@ class _CatalogItem extends StatelessWidget {
     return VxBox(
       child: Row(
         children: [
-          _CatalogImage(
-            imageUrl: catalog.imageUrl,
+          Hero(
+            tag: Key(catalog.id),
+            child: _CatalogImage(
+              imageUrl: catalog.imageUrl,
+            ),
           ),
           Expanded(
             child: Column(
@@ -86,7 +108,7 @@ class _CatalogItem extends StatelessWidget {
                     "\$${catalog.price}".text.orange500.bold.xl.make(),
                     ElevatedButton(
                       onPressed: () {},
-                      child: "Buy".text.make().animatedBox.rounded.make(),
+                      child: "Add to cart".text.make().animatedBox.rounded.make(),
                       style: ElevatedButton.styleFrom(
                         primary: Vx.orange500,
                         shape: RoundedRectangleBorder(
@@ -116,6 +138,7 @@ class _CatalogImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       imageUrl,
+      errorBuilder: (c, e, s) => CircularProgressIndicator().centered(),
     ).box.roundedSM.color(Vx.blueGray300).p8.make().p16().wh24(context);
   }
 }
@@ -133,7 +156,7 @@ class _HomeBodyState extends State<_HomeBody> {
     return (CatalogModel.items?.isNotEmpty ?? false)
         ? _CatalogList().expand()
         : Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator().centered().expand(),
           );
   }
 
@@ -144,6 +167,11 @@ class _HomeBodyState extends State<_HomeBody> {
   }
 
   void loadData() async {
+    await Future.delayed(
+      Duration(
+        seconds: 2,
+      ),
+    );
     final catalogJson =
             await rootBundle.loadString("assets/files/catalog.json"),
         decodedJson = jsonDecode(catalogJson),
