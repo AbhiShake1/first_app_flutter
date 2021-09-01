@@ -9,7 +9,8 @@ class Item {
   Item(
       {required this.id,
       required this.name,
-      required this.desc,required this.descExtra,
+      required this.desc,
+      required this.descExtra,
       required this.color,
       required this.imageUrl,
       required this.price});

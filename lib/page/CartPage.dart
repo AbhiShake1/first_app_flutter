@@ -12,7 +12,7 @@ class CartPage extends StatelessWidget {
         context,
         title: "Cart",
       ),
-      backgroundColor: context.backgroundColor,
+      //backgroundColor: context.backgroundColor,
     );
   }
 }

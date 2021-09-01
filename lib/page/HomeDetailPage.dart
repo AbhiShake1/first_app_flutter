@@ -11,7 +11,7 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.backgroundColor,
+      //backgroundColor: context.backgroundColor,
       appBar: GlobalAppBar(context),
       body: Column(
         children: [
@@ -30,12 +30,7 @@ class HomeDetailPage extends StatelessWidget {
       bottomNavigationBar: ButtonBar(
         alignment: MainAxisAlignment.spaceBetween,
         children: [
-          "\$${catalog.price}"
-              .text
-              .color(context.accentColor)
-              .bold
-              .xl3
-              .make(),
+          "\$${catalog.price}".text.color(context.accentColor).bold.xl3.make(),
           ElevatedButton(
             onPressed: () {},
             child: "Add to cart".text.make(),

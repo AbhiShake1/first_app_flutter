@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
+
 import '../widget/GlobalCircularProgressIndicator.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,7 +18,6 @@ class HomePage extends StatelessWidget {
         onPressed: () => context.navigator?.pushNamed(
           Routes.cart,
         ),
-        backgroundColor: context.accentColor,
         child: Icon(CupertinoIcons.shopping_cart),
       ),
       body: SafeArea(
@@ -178,9 +178,7 @@ class _HomeBodyState extends State<_HomeBody> {
   Widget build(BuildContext context) {
     return (CatalogModel.items?.isNotEmpty ?? false)
         ? _CatalogList().expand()
-        : Center(
-            child: GlobalCircularProgressIndicator()
-          );
+        : GlobalCircularProgressIndicator().py(context.screenHeight/4);
   }
 
   @override

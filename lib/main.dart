@@ -16,10 +16,10 @@ class MyApp extends StatelessWidget {
       darkTheme: Themes.dark(context),
       theme: Themes.light(context),
       routes: {
-        '/' : (c) => HomePage(), //by default or if no path found
-        Routes.home : (c) => HomePage(),
-        Routes.login : (c) => LoginPage(),
-        Routes.cart : (c) => CartPage(),
+        '/': (c) => HomePage(), //by default or if no path found
+        Routes.home: (c) => HomePage(),
+        Routes.login: (c) => LoginPage(),
+        Routes.cart: (c) => CartPage(),
       },
     );
   }

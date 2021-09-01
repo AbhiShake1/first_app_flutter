@@ -7,7 +7,11 @@ class GlobalAppBar extends AppBar {
           backgroundColor: context.backgroundColor,
           elevation: 0,
           toolbarHeight: 100,
-          title: title.text.extraBold.scale(2.4).make().px24(),
+          title: title.text.extraBold
+              .scale(2.4)
+              .color(context.theme.focusColor)
+              .make()
+              .px24(),
           leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             splashColor: Colors.transparent,
