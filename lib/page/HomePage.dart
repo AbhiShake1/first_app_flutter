@@ -178,7 +178,7 @@ class _HomeBodyState extends State<_HomeBody> {
   Widget build(BuildContext context) {
     return (CatalogModel.items?.isNotEmpty ?? false)
         ? _CatalogList().expand()
-        : GlobalCircularProgressIndicator().py(context.screenHeight/4);
+        : GlobalCircularProgressIndicator().py(context.screenHeight / 4);
   }
 
   @override
