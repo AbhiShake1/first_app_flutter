@@ -1,5 +1,5 @@
+import 'package:first_app_flutter/code/Store.dart';
 import 'package:first_app_flutter/model/CartModel.dart';
-import 'package:first_app_flutter/model/CatalogModel.dart';
 import 'package:first_app_flutter/widget/GlobalAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +20,7 @@ class CartPage extends StatelessWidget {
           _CartList().p32().expand(),
           120.heightBox,
           Divider(),
+          Divider(),
           _CartTotal(),
         ],
       ),
@@ -30,11 +31,22 @@ class CartPage extends StatelessWidget {
 class _CartTotal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final cart = CartModel();
+    final CartModel cart = (VxState.store as Store).cart;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        "\$${cart.totalPrice}".text.xl5.color(context.theme.accentColor).make().px32(),
+        VxBuilder(
+          builder: (c, s, s_) => "\$${cart.totalPrice}"
+              .text
+              .xl5
+              .color(c.theme.accentColor)
+              .make()
+              .px32(),
+          mutations: {
+            RemoveMutation,
+          },
+        ),
         90.widthBox,
         ElevatedButton(
           style: ButtonStyle(
@@ -61,31 +73,41 @@ class _CartTotal extends StatelessWidget {
   }
 }
 
-class _CartList extends StatefulWidget {
-  @override
-  _CartListState createState() => _CartListState();
-}
-
-class _CartListState extends State<_CartList> {
-  final cart = CartModel();
+class _CartList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: cart.items.length,
-      itemBuilder: (c, i) => ListTile(
-        leading: Icon(
-          Icons.done,
-          color: context.theme.focusColor,
-        ),
-        trailing: IconButton(
-          icon: Icon(
-            CupertinoIcons.delete_solid,
-            color: context.theme.focusColor,
-          ),
-          onPressed: () {},
-        ),
-        title: cart.items[i]?.name.text.color(context.theme.focusColor).make(),
-      ),
-    );
+    VxState.watch(context, on: [
+      RemoveMutation,
+    ]);
+
+    final CartModel cart = (VxState.store as Store).cart;
+
+    return cart.items.isEmpty
+        ? "No pending items :)\n\n  Happy shopping"
+            .text
+            .color(context.theme.focusColor)
+            .xl3
+            .makeCentered()
+        : ListView.builder(
+            itemCount: cart.items.length,
+            itemBuilder: (c, i) => ListTile(
+              leading: Icon(
+                CupertinoIcons.checkmark_seal,
+                color: context.theme.focusColor,
+              ),
+              trailing: IconButton(
+                icon: Icon(
+                  CupertinoIcons.cart_badge_minus,
+                  color: context.theme.focusColor,
+                ),
+                onPressed: () => RemoveMutation(
+                  item: cart.items[i]!,
+                ),
+              ),
+              title: cart.items[i]?.name.text
+                  .color(context.theme.focusColor)
+                  .make(),
+            ),
+          );
   }
 }

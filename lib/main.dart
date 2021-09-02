@@ -1,12 +1,19 @@
 import 'package:first_app_flutter/page/CartPage.dart';
 import 'package:first_app_flutter/util/Themes.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
 
+import 'code/Store.dart';
 import 'page/HomePage.dart';
 import 'page/LoginPage.dart';
 import 'util/Routes.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(
+      VxState(
+        store: Store(),
+        child: MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   @override

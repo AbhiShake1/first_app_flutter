@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:first_app_flutter/code/Store.dart';
 import 'package:first_app_flutter/model/CartModel.dart';
 import 'package:first_app_flutter/model/CatalogModel.dart';
 import 'package:first_app_flutter/page/HomeDetailPage.dart';
@@ -122,7 +123,9 @@ class _CatalogItem extends StatelessWidget {
                         .bold
                         .xl
                         .make(),
-                    _AddToCart(catalog),
+                    AddToCart(
+                      catalog,
+                    ),
                   ],
                 ),
               ],
@@ -134,34 +137,29 @@ class _CatalogItem extends StatelessWidget {
   }
 }
 
-class _AddToCart extends StatefulWidget {
+class AddToCart extends StatelessWidget {
   final Item catalog;
 
-  const _AddToCart(this.catalog);
-
-  @override
-  State<_AddToCart> createState() => _AddToCartState();
-}
-
-class _AddToCartState extends State<_AddToCart> {
-  bool isAdded = false;
+  AddToCart(this.catalog);
 
   @override
   Widget build(BuildContext context) {
+    VxState.watch(context, on: [
+      AddMutation,
+      RemoveMutation,
+    ]);
+
+    final CartModel cart = (VxState.store as Store).cart;
+
+    bool isInCart = cart.items.contains(catalog);
+
     return ElevatedButton(
       onPressed: () {
-        setState(
-          () {
-            isAdded = isAdded.toggle();
-            final cart = CartModel();
-            cart.catalog = CatalogModel();
-            cart.add(widget.catalog);
-          },
-        );
+        if (!isInCart) {
+          AddMutation(item: catalog);
+        }
       },
-      child: isAdded
-          ? Icon(Icons.done)
-          : "Add to cart".text.make().animatedBox.rounded.make(),
+      child: isInCart ? Icon(Icons.done) : Icon(CupertinoIcons.cart_badge_plus),
       style: ElevatedButton.styleFrom(
         primary: context.accentColor,
         shape: RoundedRectangleBorder(

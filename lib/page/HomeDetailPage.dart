@@ -3,6 +3,8 @@ import 'package:first_app_flutter/widget/GlobalAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'HomePage.dart';
+
 class HomeDetailPage extends StatelessWidget {
   final Item catalog;
 
@@ -31,17 +33,8 @@ class HomeDetailPage extends StatelessWidget {
         alignment: MainAxisAlignment.spaceBetween,
         children: [
           "\$${catalog.price}".text.color(context.accentColor).bold.xl3.make(),
-          ElevatedButton(
-            onPressed: () {},
-            child: "Add to cart".text.make(),
-            style: ElevatedButton.styleFrom(
-              primary: context.accentColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-            ),
+          AddToCart(
+            catalog,
           ).wh(100, 50),
         ],
       ).p32().backgroundColor(context.cardColor),

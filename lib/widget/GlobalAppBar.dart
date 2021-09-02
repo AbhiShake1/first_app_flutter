@@ -13,7 +13,7 @@ class GlobalAppBar extends AppBar {
               .make()
               .px24(),
           leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.navigator?.pop(),
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             icon: Icon(
