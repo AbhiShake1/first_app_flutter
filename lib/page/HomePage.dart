@@ -7,7 +7,7 @@ import 'package:first_app_flutter/page/HomeDetailPage.dart';
 import 'package:first_app_flutter/util/Routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:velocity_x/velocity_x.dart';
 
 import '../widget/GlobalCircularProgressIndicator.dart';
@@ -15,12 +15,27 @@ import '../widget/GlobalCircularProgressIndicator.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final cart = (VxState.store as Store).cart;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.navigator?.pushNamed(
-          Routes.cart,
-        ),
-        child: Icon(CupertinoIcons.shopping_cart),
+      floatingActionButton: VxBuilder(
+        mutations: {
+          AddMutation,
+        },
+        builder: (c, s, s_) {
+          return FloatingActionButton(
+            onPressed: () => context.navigator?.pushNamed(
+              Routes.cart,
+            ),
+            child: Icon(CupertinoIcons.shopping_cart),
+          ).badge(
+            color: c.theme.focusColor,
+            size: 20,
+            count: cart.items.length,
+            textStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
       body: SafeArea(
         child: Column(
@@ -103,37 +118,38 @@ class _CatalogItem extends StatelessWidget {
               imageUrl: catalog.imageUrl,
             ),
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                catalog.name.text.bold.xl2.color(context.primaryColor).make(),
-                catalog.desc.text
-                    .color(context.canvasColor)
-                    .textStyle(context.captionStyle!)
-                    .xl
-                    .make(),
-                ButtonBar(
-                  alignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    "\$${catalog.price}"
-                        .text
-                        .color(context.accentColor)
-                        .bold
-                        .xl
-                        .make(),
-                    AddToCart(
-                      catalog,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              catalog.name.text.bold.xl2
+                  .color(context.primaryColor)
+                  .make()
+                  .py8(),
+              catalog.desc.text
+                  .color(context.canvasColor)
+                  .textStyle(context.captionStyle!)
+                  .xl
+                  .make(),
+              ButtonBar(
+                alignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  "\$${catalog.price}"
+                      .text
+                      .color(context.accentColor)
+                      .bold
+                      .xl
+                      .make(),
+                  AddToCart(
+                    catalog,
+                  ),
+                ],
+              ),
+            ],
+          ).expand(),
         ],
       ),
-    ).color(context.cardColor).rounded.square(110).make().py(16);
+    ).color(context.cardColor).rounded.square(130).make().py(16);
   }
 }
 
@@ -220,10 +236,15 @@ class _HomeBodyState extends State<_HomeBody> {
         seconds: 2,
       ),
     );
-    final catalogJson =
-            await rootBundle.loadString("assets/files/catalog.json"),
-        decodedJson = jsonDecode(catalogJson),
-        productsData = decodedJson["products"];
+    final response = await http.get(Uri.parse(
+        "https://raw.githubusercontent.com/AbhiShake1/first_app_flutter/main/assets/files/catalog.json"));
+
+    final catalogJson = response.body;
+    //await rootBundle.loadString("assets/files/catalog.json");
+    //print(catalogJson);
+
+    final decodedJson = jsonDecode(catalogJson);
+    var productsData = decodedJson["products"];
 
     setState(() {
       CatalogModel.items =
