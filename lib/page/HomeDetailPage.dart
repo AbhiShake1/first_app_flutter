@@ -24,8 +24,10 @@ class HomeDetailPage extends StatelessWidget {
               height: 520,
             ),
           ),
-          _HomeDetailBody(
-            catalog: catalog,
+          SingleChildScrollView(
+            child: _HomeDetailBody(
+              catalog: catalog,
+            ),
           ),
         ],
       ),

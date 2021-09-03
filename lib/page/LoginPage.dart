@@ -69,6 +69,8 @@ class _LoginPageState extends State<LoginPage> {
                     hint: "Enter password",
                     // dont show typed text (show dots like password fields)
                     obscureText: true,
+                    // show view password icon
+                    isPassword: true,
                     style: TextStyle(
                       color: context.theme.focusColor,
                     ),
@@ -91,7 +93,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     );
                     // do not push to stack, replace with previous screen
-                    await context.navigator?.pushReplacementNamed(Routes.home);
+                    await context.vxNav.clearAndPush(
+                      Uri.parse(Routes.home),
+                    );
                     //await Navigator.pushNamed(context, Routes.home);
                     // restore changed button props on back
                     //setState(() => _animateLogin = true);

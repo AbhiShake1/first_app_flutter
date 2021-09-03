@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:first_app_flutter/code/Store.dart';
 import 'package:first_app_flutter/model/CartModel.dart';
 import 'package:first_app_flutter/model/CatalogModel.dart';
-import 'package:first_app_flutter/page/HomeDetailPage.dart';
 import 'package:first_app_flutter/util/Routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +22,8 @@ class HomePage extends StatelessWidget {
         },
         builder: (c, s, s_) {
           return FloatingActionButton(
-            onPressed: () => context.navigator?.pushNamed(
-              Routes.cart,
+            onPressed: () => context.vxNav.push(
+              Uri.parse(Routes.cart),
             ),
             child: Icon(CupertinoIcons.shopping_cart),
           ).badge(
@@ -82,22 +81,36 @@ class _CatalogHeader extends StatelessWidget {
 class _CatalogList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: CatalogModel.items!.length,
-      itemBuilder: (c, i) {
-        final catalog = CatalogModel.items![i];
-        return InkWell(
-          child: _CatalogItem(
-            catalog: catalog,
-          ),
-          onTap: () => context.navigator?.push(
-            MaterialPageRoute(
-              builder: (c) => HomeDetailPage(catalog: catalog),
-            ),
-          ),
-        );
+    return RefreshIndicator(
+      onRefresh: () async {
+        void rebuild(Element e) {
+          e.markNeedsBuild();
+          e.visitChildren(rebuild);
+        }
+
+        (context as Element).visitChildren(rebuild);
       },
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: CatalogModel.items!.length,
+        itemBuilder: (c, i) {
+          final catalog = CatalogModel.items![i];
+          return InkWell(
+            child: _CatalogItem(
+              catalog: catalog,
+            ),
+            onTap: () => context.vxNav.push(
+              Uri(
+                path: Routes.homeDetail,
+                queryParameters: {
+                  "name": catalog.name,
+                },
+              ),
+              params: catalog,
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -197,7 +210,9 @@ class _CatalogImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       imageUrl,
-      errorBuilder: (c, e, s) => GlobalCircularProgressIndicator(),
+      errorBuilder: (c, e, s) {
+        return GlobalCircularProgressIndicator();
+      },
     )
         .box
         .roundedSM
@@ -221,7 +236,8 @@ class _HomeBodyState extends State<_HomeBody> {
   Widget build(BuildContext context) {
     return (CatalogModel.items?.isNotEmpty ?? false)
         ? _CatalogList().expand()
-        : GlobalCircularProgressIndicator().py(context.screenHeight / 4);
+        : GlobalCircularProgressIndicator()
+            .py(!context.isLandscape ? context.screenHeight / 4 : 0);
   }
 
   @override
@@ -238,10 +254,9 @@ class _HomeBodyState extends State<_HomeBody> {
     );
     final response = await http.get(Uri.parse(
         "https://raw.githubusercontent.com/AbhiShake1/first_app_flutter/main/assets/files/catalog.json"));
+    //await rootBundle.loadString("assets/files/catalog.json");
 
     final catalogJson = response.body;
-    //await rootBundle.loadString("assets/files/catalog.json");
-    //print(catalogJson);
 
     final decodedJson = jsonDecode(catalogJson);
     var productsData = decodedJson["products"];

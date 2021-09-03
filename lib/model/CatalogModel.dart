@@ -6,6 +6,11 @@ class CatalogModel {
         orElse: null,
       );
 
+  Item? getByName(String name) => items?.firstWhere(
+      (e) => e.name == name,
+      orElse: null,
+  );
+
   Item getByPosition(int position) => items![position];
 }
 
