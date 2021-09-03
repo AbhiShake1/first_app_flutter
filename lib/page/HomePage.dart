@@ -63,6 +63,10 @@ class _CatalogHeader extends StatelessWidget {
             .underline
             .color(context.accentColor)
             .makeCentered()
+            .shimmer(
+              primaryColor: context.accentColor,
+              secondaryColor: context.theme.backgroundColor,
+            )
             .py32(),
         VxBox().py64.make(),
         "Trending Products"
@@ -236,8 +240,7 @@ class _HomeBodyState extends State<_HomeBody> {
   Widget build(BuildContext context) {
     return (CatalogModel.items?.isNotEmpty ?? false)
         ? _CatalogList().expand()
-        : GlobalCircularProgressIndicator()
-            .py(!context.isLandscape ? context.screenHeight / 4 : 0);
+        : GlobalCircularProgressIndicator();
   }
 
   @override

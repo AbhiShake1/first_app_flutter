@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         //by default or if no path found
         routes: {
           '/': (a, b) => MaterialPage(
-                child: LoginPage(),
+                child: HomePage(),
               ),
           Routes.home: (a, b) => MaterialPage(
                 child: HomePage(),

@@ -5,7 +5,7 @@ class GlobalCircularProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularProgressIndicator(
-      color: context.accentColor,
+      color: context.theme.focusColor,
     ).centered();
   }
 }
