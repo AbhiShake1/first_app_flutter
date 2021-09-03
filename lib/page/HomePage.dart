@@ -255,8 +255,11 @@ class _HomeBodyState extends State<_HomeBody> {
         seconds: 2,
       ),
     );
-    final response = await http.get(Uri.parse(
-        "https://raw.githubusercontent.com/AbhiShake1/first_app_flutter/main/assets/files/catalog.json"));
+    var a = false;
+    final response = await http.get(
+      Uri.parse(
+          "https://raw.githubusercontent.com/AbhiShake1/first_app_flutter/main/assets/files/catalog.json"),
+    );
     //await rootBundle.loadString("assets/files/catalog.json");
 
     final catalogJson = response.body;

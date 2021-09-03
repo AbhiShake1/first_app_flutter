@@ -3,12 +3,12 @@ class CatalogModel {
 
   Item? getById(String id) => items?.firstWhere(
         (e) => e.id == id,
-        orElse: null,
-      );
+    orElse: null,
+  );
 
   Item? getByName(String name) => items?.firstWhere(
-      (e) => e.name == name,
-      orElse: null,
+        (e) => e.name == name,
+    orElse: null,
   );
 
   Item getByPosition(int position) => items![position];
@@ -20,12 +20,12 @@ class Item {
 
   Item(
       {required this.id,
-      required this.name,
-      required this.desc,
-      required this.descExtra,
-      required this.color,
-      required this.imageUrl,
-      required this.price});
+        required this.name,
+        required this.desc,
+        required this.descExtra,
+        required this.color,
+        required this.imageUrl,
+        required this.price});
 
   factory Item.fromMap(Map<String, dynamic> map) {
     return Item(
