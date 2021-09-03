@@ -13,14 +13,11 @@ class CartPage extends StatelessWidget {
         context,
         title: "Cart",
       ),
-      //backgroundColor: context.backgroundColor,
+      //backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _CartList().p32().expand(),
-          120.heightBox,
-          Divider(),
-          Divider(),
           _CartTotal(),
         ],
       ),
@@ -33,13 +30,14 @@ class _CartTotal extends StatelessWidget {
   Widget build(BuildContext context) {
     final CartModel cart = (VxState.store as Store).cart;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return ButtonBar(
+      alignment: MainAxisAlignment.spaceAround,
       children: [
         VxBuilder(
           builder: (c, s, s_) => "\$${cart.totalPrice}"
               .text
               .xl5
+              .bold
               .color(c.theme.accentColor)
               .make()
               .px32(),
@@ -47,11 +45,14 @@ class _CartTotal extends StatelessWidget {
             RemoveMutation,
           },
         ),
-        90.widthBox,
+
         ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              context.accentColor,
+          style: ElevatedButton.styleFrom(
+            primary: context.accentColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
             ),
           ),
           onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
@@ -65,8 +66,9 @@ class _CartTotal extends StatelessWidget {
                 context.theme.focusColor,
               )
               .bold
+              .xl4
               .make(),
-        ).w32(context).p64(),
+        ).w(120).h(50).py64(),
         //130.heightBox,
       ],
     );

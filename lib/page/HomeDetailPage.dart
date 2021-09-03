@@ -12,39 +12,42 @@ class HomeDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: false,
-      //backgroundColor: Colors.white,
-      appBar: GlobalAppBar(context),
-      body: Column(
-        children: [
-          Hero(
-            tag: Key(catalog.id),
-            child: InteractiveViewer(
-              child: Image.network(
-                catalog.imageUrl,
-                height: 520,
+    return SafeArea(
+      child: Scaffold(
+        primary: false,
+        //backgroundColor: Colors.white,
+        appBar: GlobalAppBar(context),
+        body: Column(
+          children: [
+            Hero(
+              tag: Key(catalog.id),
+              child: InteractiveViewer(
+                child: Image.network(
+                  catalog.imageUrl,
+                  height: 520,
+                ),
               ),
+            ).expand(),
+            _HomeDetailBody(
+              catalog: catalog,
             ),
-          ).expand(),
-          _HomeDetailBody(
-            catalog: catalog,
-          ),
-        ],
+          ],
+        ),
+        bottomNavigationBar: ButtonBar(
+          alignment: MainAxisAlignment.spaceBetween,
+          children: [
+            "\$${catalog.price}"
+                .text
+                .color(context.accentColor)
+                .bold
+                .xl3
+                .make(),
+            AddToCart(
+              catalog,
+            ).wh(100, 50),
+          ],
+        ).p32().backgroundColor(context.cardColor),
       ),
-      bottomNavigationBar: ButtonBar(
-        alignment: MainAxisAlignment.spaceBetween,
-        children: [
-          "\$${catalog.price}".text
-              .color(context.accentColor)
-              .bold
-              .xl3
-              .make(),
-          AddToCart(
-            catalog,
-          ).wh(100, 50),
-        ],
-      ).p32().backgroundColor(context.cardColor),
     );
   }
 }
