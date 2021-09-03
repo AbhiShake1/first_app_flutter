@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'code/Store.dart';
+import 'core/Store.dart';
 import 'page/HomePage.dart';
 import 'page/LoginPage.dart';
 import 'util/Routes.dart';
@@ -27,14 +27,6 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       darkTheme: Themes.dark(context),
       theme: Themes.light(context),
-      /*
-      routes: {
-        '/': (c) => HomePage(), //by default or if no path found
-        Routes.home: (c) => HomePage(),
-        Routes.login: (c) => LoginPage(),
-        Routes.cart: (c) => CartPage(),
-      },
-       */
       routeInformationParser: VxInformationParser(),
       routerDelegate: VxNavigator(
         //by default or if no path found

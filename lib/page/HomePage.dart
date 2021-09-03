@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:first_app_flutter/code/Store.dart';
+import 'package:first_app_flutter/core/Store.dart';
 import 'package:first_app_flutter/model/CartModel.dart';
 import 'package:first_app_flutter/model/CatalogModel.dart';
 import 'package:first_app_flutter/util/Routes.dart';

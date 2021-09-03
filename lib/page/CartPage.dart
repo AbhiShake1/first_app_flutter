@@ -1,4 +1,4 @@
-import 'package:first_app_flutter/code/Store.dart';
+import 'package:first_app_flutter/core/Store.dart';
 import 'package:first_app_flutter/model/CartModel.dart';
 import 'package:first_app_flutter/widget/GlobalAppBar.dart';
 import 'package:flutter/cupertino.dart';
